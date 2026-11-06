@@ -23,14 +23,14 @@ jobs:
           rm -rf .gitattributes
           flutter create . --org com.jeeprep --project-name jee_prep_app --platforms android
 
-      - name: Update minSdk to 21
+      - name: Fix Gradle Properties
         run: |
-          if [ -f android/app/build.gradle ]; then
-            sed -i 's/minSdkVersion.*/minSdkVersion 21/g' android/app/build.gradle || true
-          fi
+          echo "android.useAndroidX=true" >> android/gradle.properties
+          echo "android.enableJetifier=true" >> android/gradle.properties
+          echo "org.gradle.jvmargs=-Xmx4G -Dfile.encoding=UTF-8" >> android/gradle.properties
 
       - name: Build APK
-        run: flutter build apk --release
+        run: flutter build apk --release --no-pub
 
       - uses: actions/upload-artifact@v4
         with:
