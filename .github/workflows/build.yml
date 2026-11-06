@@ -18,16 +18,27 @@ jobs:
           flutter-version: '3.19.2'
           channel: 'stable'
 
-      - name: Create Flutter Project Structure
+      - name: Create Clean Flutter Project & Copy Code
         run: |
-          rm -rf .gitattributes
-          flutter create . --org com.jeeprep --project-name jee_prep_app --platforms android
-
-      - name: Fix Gradle Properties
-        run: |
-          echo "android.useAndroidX=true" >> android/gradle.properties
-          echo "android.enableJetifier=true" >> android/gradle.properties
-          echo "org.gradle.jvmargs=-Xmx4G -Dfile.encoding=UTF-8" >> android/gradle.properties
+          # Backup our lib and pubspec
+          mkdir -p temp_backup
+          cp -r lib temp_backup/
+          cp pubspec.yaml temp_backup/
+          
+          # Create a fresh flutter project in a temporary folder
+          flutter create temp_project --org com.jeeprep --project-name jee_prep_app --platforms android
+          
+          # Move into project and replace lib & pubspec with ours
+          cd temp_project
+          rm -rf lib pubspec.yaml
+          cp -r ../temp_backup/lib ./
+          cp ../temp_backup/pubspec.yaml ./
+          
+          # Move everything back to root
+          cd ..
+          shopt -s dotglob
+          cp -r temp_project/* ./
+          rm -rf temp_project temp_backup
 
       - name: Build APK
         run: flutter build apk --release --no-pub
