@@ -23,6 +23,12 @@ jobs:
           rm -rf .gitattributes
           flutter create . --org com.jeeprep --project-name jee_prep_app --platforms android
 
+      - name: Update minSdk to 21
+        run: |
+          if [ -f android/app/build.gradle ]; then
+            sed -i 's/minSdkVersion.*/minSdkVersion 21/g' android/app/build.gradle || true
+          fi
+
       - name: Build APK
         run: flutter build apk --release
 
