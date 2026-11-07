@@ -18,12 +18,11 @@ jobs:
           flutter-version: '3.19.2'
           channel: 'stable'
 
-      - name: Create Android Skeleton
-        run: flutter create . --org com.jeeprep --project-name jee_prep_app --platforms android
+      - name: Accept Android Licenses
+        run: yes | flutter doctor --android-licenses
 
-      - name: Fix Gradle Distribution URL for Java 17
-        run: |
-          sed -i 's|distributionUrl=.*|distributionUrl=https\\://services.gradle.org/distributions/gradle-8.4-bin.zip|g' android/gradle/wrapper/gradle-wrapper.properties
+      - name: Create Android Platform Skeleton
+        run: flutter create . --org com.jeeprep --project-name jee_prep_app --platforms android
 
       - name: Install Dependencies
         run: flutter pub get
