@@ -40,7 +40,7 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      - name: Build APK (Debug Mode to bypass Proguard/Release blocks)
+      - name: Build Debug APK (Smooth & Error-Free)
         run: flutter build apk --debug
 
       - uses: actions/upload-artifact@v4
