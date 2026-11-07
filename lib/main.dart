@@ -51,7 +51,7 @@ class AppProvider extends ChangeNotifier {
     'Chemistry: Mole Concept': 'Completed',
     'Maths: Quadratic Eq': 'Not Started',
   };
-  List> mockTests = [
+  List mockTests = [
     {'name': 'Mock Test 1', 'score': 180, 'total': 300, 'date': '2026-03-01'}
   ];
 
@@ -63,7 +63,7 @@ class AppProvider extends ChangeNotifier {
 
     if (savedTasks != null) tasks = List<String>.from(jsonDecode(savedTasks));
     if (savedChapters != null) chapters = Map<String, String>.from(jsonDecode(savedChapters));
-    if (savedTests != null) mockTests = List>.from(jsonDecode(savedTests));
+    if (savedTests != null) mockTests = jsonDecode(savedTests);
     notifyListeners();
   }
 
@@ -111,7 +111,7 @@ class AppProvider extends ChangeNotifier {
       final data = jsonDecode(jsonString);
       tasks = List<String>.from(data['tasks'] ?? []);
       chapters = Map<String, String>.from(data['chapters'] ?? {});
-      mockTests = List>.from(data['mockTests'] ?? []);
+      mockTests = data['mockTests'] ?? [];
       saveData();
       notifyListeners();
     } catch (e) {
@@ -385,89 +385,5 @@ class AnalyticsScreen extends StatelessWidget {
                 builder: (context, provider, child) {
                   int completed = provider.chapters.values.where((v) => v == 'Completed').length;
                   int inProgress = provider.chapters.values.where((v) => v == 'In Progress').length;
-                  int notStarted = provider.chapters.values.where((v) => v == 'Not Started').length;
-
-                  return PieChart(
-                    PieChartData(
-                      sectionsSpace: 4,
-                      centerSpaceRadius: 40,
-                      sections: [
-                        PieChartSectionData(color: Colors.green, value: completed.toDouble(), title: 'Done'),
-                        PieChartSectionData(color: Colors.orange, value: inProgress.toDouble(), title: 'Doing'),
-                        PieChartSectionData(color: Colors.redAccent, value: notStarted.toDouble(), title: 'Pending'),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final provider = Provider.of<AppProvider>(context);
-    final TextEditingController importController = TextEditingController();
-
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            const Text('Data Backup & Offline Sync', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 16),
-            const Text('Export your progress data as a backup text code or import it anytime offline.', style: TextStyle(color: Colors.grey)),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF6366F1)),
-              icon: const Icon(Icons.upload, color: Colors.white),
-              label: const Text('Export Backup Code', style: TextStyle(color: Colors.white)),
-              onPressed: () {
-                String data = provider.exportData();
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    backgroundColor: const Color(0xFF1E293B),
-                    title: const Text('Backup Code'),
-                    content: SelectableText(data),
-                    actions: [
-                      TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close'))
-                    ],
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: importController,
-              maxLines: 4,
-              decoration: InputDecoration(
-                hintText: 'Paste backup code here to restore...',
-                filled: true,
-                fillColor: const Color(0xFF1E293B),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
-              ),
-            ),
-            const SizedBox(height: 12),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.teal),
-              icon: const Icon(Icons.download, color: Colors.white),
-              label: const Text('Restore Backup', style: TextStyle(color: Colors.white)),
-              onPressed: () {
-                provider.importData(importController.text);
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Data restored successfully!')));
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+                  int notStarted = provider.
+                    
