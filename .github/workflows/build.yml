@@ -30,7 +30,7 @@ jobs:
             sed -i 's|distributionUrl=.*|distributionUrl=https\\://services.gradle.org/distributions/gradle-8.4-bin.zip|g' android/gradle/wrapper/gradle-wrapper.properties
           fi
 
-      - name: Force minSdk 21 for modern package compatibility
+      - name: Force minSdk 21 and clean build settings
         run: |
           if [ -f android/app/build.gradle ]; then
             sed -i 's/minSdkVersion.*/minSdkVersion 21/g' android/app/build.gradle || true
@@ -40,8 +40,8 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      - name: Build Debug APK (Smooth & Error-Free)
-        run: flutter build apk --debug
+      - name: Build Debug APK
+        run: flutter build apk --debug --verbose
 
       - uses: actions/upload-artifact@v4
         with:
