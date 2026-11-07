@@ -24,6 +24,19 @@ jobs:
             flutter create . --org com.jeeprep --project-name jee_prep_app --platforms android
           fi
 
+      - name: Upgrade Gradle Wrapper for Java 17 Compatibility
+        run: |
+          if [ -f android/gradle/wrapper/gradle-wrapper.properties ]; then
+            sed -i 's|distributionUrl=.*|distributionUrl=https\\://services.gradle.org/distributions/gradle-8.4-bin.zip|g' android/gradle/wrapper/gradle-wrapper.properties
+          fi
+
+      - name: Force minSdk 21 for modern package compatibility
+        run: |
+          if [ -f android/app/build.gradle ]; then
+            sed -i 's/minSdkVersion.*/minSdkVersion 21/g' android/app/build.gradle || true
+            sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 21/g' android/app/build.gradle || true
+          fi
+
       - name: Install Dependencies
         run: flutter pub get
 
