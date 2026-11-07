@@ -18,11 +18,20 @@ jobs:
           flutter-version: '3.19.2'
           channel: 'stable'
 
-      - name: Accept Android Licenses
-        run: yes | flutter doctor --android-licenses
-
       - name: Create Android Platform Skeleton
         run: flutter create . --org com.jeeprep --project-name jee_prep_app --platforms android
+
+      - name: Force Gradle 8.4 & AGP 8.1.0 for Java 17
+        run: |
+          # 1. Update Gradle Wrapper to 8.4
+          if [ -f android/gradle/wrapper/gradle-wrapper.properties ]; then
+            sed -i 's|distributionUrl=.*|distributionUrl=https\\://services.gradle.org/distributions/gradle-8.4-bin.zip|g' android/gradle/wrapper/gradle-wrapper.properties
+          fi
+
+          # 2. Update Android Gradle Plugin to 8.1.0 for Java 17 support
+          if [ -f android/build.gradle ]; then
+            sed -i 's/com.android.tools.build:gradle:[0-9.]*/com.android.tools.build:gradle:8.1.0/g' android/build.gradle
+          fi
 
       - name: Install Dependencies
         run: flutter pub get
