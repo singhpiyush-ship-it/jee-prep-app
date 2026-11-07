@@ -44,7 +44,6 @@ class JEEPrepApp extends StatelessWidget {
   }
 }
 
-// --- APP STATE & OFFLINE STORAGE ---
 class AppProvider extends ChangeNotifier {
   List<String> tasks = ['Revise Physics Mechanics', 'Solve 50 Chemistry MCQs', 'Practice Calculus'];
   Map<String, String> chapters = {
@@ -121,7 +120,6 @@ class AppProvider extends ChangeNotifier {
   }
 }
 
-// --- MAIN LAYOUT WITH BOTTOM NAVIGATION ---
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
 
@@ -162,7 +160,6 @@ class _MainLayoutState extends State<MainLayout> {
   }
 }
 
-// --- 1. HOME SCREEN ---
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -246,7 +243,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// --- 2. PLANNER SCREEN ---
 class PlannerScreen extends StatefulWidget {
   const PlannerScreen({super.key});
 
@@ -322,7 +318,6 @@ class _PlannerScreenState extends State<PlannerScreen> {
   }
 }
 
-// --- 3. TRACKER SCREEN ---
 class TrackerScreen extends StatelessWidget {
   const TrackerScreen({super.key});
 
@@ -372,7 +367,6 @@ class TrackerScreen extends StatelessWidget {
   }
 }
 
-// --- 4. ANALYTICS SCREEN ---
 class AnalyticsScreen extends StatelessWidget {
   const AnalyticsScreen({super.key});
 
@@ -414,7 +408,6 @@ class AnalyticsScreen extends StatelessWidget {
   }
 }
 
-// --- 5. SETTINGS & BACKUP SCREEN ---
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
