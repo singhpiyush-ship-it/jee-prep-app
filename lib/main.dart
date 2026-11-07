@@ -168,7 +168,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Target JEE Main 2027 estimated date (e.g., Jan 2027)
     final targetDate = DateTime(2027, 1, 15);
     final daysLeft = targetDate.difference(DateTime.now()).inDays;
 
@@ -323,7 +322,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
   }
 }
 
-// --- 3. TRACKER SCREEN (PCM Chapters & Mock Tests) ---
+// --- 3. TRACKER SCREEN ---
 class TrackerScreen extends StatelessWidget {
   const TrackerScreen({super.key});
 
@@ -415,7 +414,7 @@ class AnalyticsScreen extends StatelessWidget {
   }
 }
 
-// --- 5. SETTINGS & OFFLINE BACKUP SCREEN ---
+// --- 5. SETTINGS & BACKUP SCREEN ---
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
